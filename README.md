@@ -7,6 +7,7 @@ Features
 --------
 
  - Syntax highlighting
+ - Auto format on save using `mint format`
 
 Screenshots
 -----------
