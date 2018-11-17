@@ -3,6 +3,22 @@ emacs mint mode
 
 Major mode for [mint lang](https://mint-lang.com).
 
+Installing
+----------
+
+### Using [`use-package`](https://github.com/jwiegley/use-package) and [`straight.el`](https://github.com/raxod502/straight.el)
+
+Add the following to your `~/.emacs` config and restart your editor:
+```elisp
+(use-package mint-mode                                                                                                                                                                         
+  :straight (mint-mode                                                                                                                                                                         
+             :type git                                                                                                                                                                         
+             :host github                                                                                                                                                                      
+             :repo "creatorrr/emacs-mint-mode"                                                                                                                                                 
+             :files ("mint-mode.el"))                                                                                                                                                          
+  :mode ("\\.mint\\'" . mint-mode))                                                                                                                                                            
+```
+
 Features
 --------
 
