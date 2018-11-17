@@ -28,11 +28,14 @@ Features
 Planned roadmap
 ---------------
 
+__Help wanted with these!__
+
  - Autocomplete support
  - Lint css values
  - Highlight HTML tags and attributes
  - Emacs shell commands for using the mint CLI
  - Documentation search
+ - Add to MELPA
 
 Screenshots
 -----------
