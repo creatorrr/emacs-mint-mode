@@ -9,6 +9,15 @@ Features
  - Syntax highlighting
  - Auto format on save using `mint format`
 
+Planned roadmap
+---------------
+
+ - Autocomplete support
+ - Lint css values
+ - Highlight HTML tags and attributes
+ - Emacs shell commands for using the mint CLI
+ - Documentation search
+
 Screenshots
 -----------
 
