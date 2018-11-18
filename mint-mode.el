@@ -1,7 +1,7 @@
 ;;; mint-mode.el --- major mode for editing .mint files. -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
-;; Version: 0.3.0
+;; Version: 0.3.1
 ;; Created: 14 Nov 2018
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
 
@@ -22,8 +22,8 @@
          (x-literal-types '("Number" "Bool" "String" "Object" "Time" "Array"))
 
          (x-keywords '("decode" "encode" "return" "connect" "use"))
-         (x-specifiers '("as" "break" "return" "using" "get" "exposing"))
-         (x-blocks '("do" "sequence" "parallel" "if" "else" "case" "try" "catch"))
+         (x-specifiers '("as" "break" "return" "using" "get" "exposing" "ok" "error" "just" "nothing"))
+         (x-blocks '("do" "sequence" "parallel" "if" "else" "case" "try" "catch" "void"))
 
          ;; generate regex string for each category of keywords
          (x-operators-regexp (regexp-opt x-operators))
@@ -58,14 +58,46 @@
 ;; Reformat function
 (defun mint-format-file ()
   "Formats current file using `mint format`"
+
   (let* ((file buffer-file-name)
-         (command (concat "mint format " file))
+         (error-file (make-temp-file "mint-format-errors-file"))
+         (command (concat "mint format " file " > " error-file))
+
+         ;; Error container
+         (error-buffer (get-buffer-create "*prettier errors*"))
+
+         ;; Revert options
          (ignore-auto t)
          (noconfirm t)
          (preserve-modes t)
-         (result (call-process "mint" nil nil nil "format" file)) )
 
-    (revert-buffer ignore-auto noconfirm preserve-modes) ))
+         ;; Run command in process
+         (result (call-process-shell-command command nil nil nil)) )
+
+    ;; Check command result
+    (if (zerop result)
+
+      ;; Update formatted file and destroy error-buffer
+      (progn
+        (kill-buffer error-buffer)
+        (revert-buffer ignore-auto noconfirm preserve-modes))
+
+      ;; Show errors
+      (progn
+        (with-current-buffer error-buffer
+          (setq buffer-read-only nil)
+          (erase-buffer)
+          (insert-file-contents error-file t nil nil)
+          (ansi-color-apply-on-region (point-min) (point-max))
+          (compilation-mode))
+
+        (display-buffer error-buffer)) )
+
+    ;; Remove temporary error file
+    (delete-file error-file) ))
+
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+(add-hook 'compilation-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;;###autoload
 (define-derived-mode mint-mode jsx-mode "mint mode"
