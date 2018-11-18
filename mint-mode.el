@@ -1,12 +1,45 @@
-;;; mint-mode.el --- major mode for editing .mint files. -*- coding: utf-8; lexical-binding: t; -*-
+;;; mint-mode.el --- major mode for editing .mint files.
+;; -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
 ;; Version: 0.3.1
-;; Created: 14 Nov 2018
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
+;; URL: https://github.com/creatorrr/emacs-mint-mode
+;; Created: 14 Nov 2018
+;; Keywords: javascript mocha jasmine
+;; Package-Requires: ((jsx-mode "0.1.10"))
 
-;; Major mode for writing programs in mint lang.
-;; https://mint-lang.com
+;;; License:
+
+;; mint-mode.el --- major mode for editing .mint files.
+;; Copyright (C) 2018 Diwank Tomer <github.com/creatorrr>
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;; This file is NOT part of GNU Emacs.
+
+;;; Commentary:
+
+;; Major mode for writing programs in mint lang. Provides:
+;; - Syntax highlighting
+;; - Auto format on save using `mint format`
+;;
+;; For more info on mint, visit: https://mint-lang.com
+
+;;; Code:
+(eval-when-compile
+  (require 'jsx-mode))
 
 ;; For highlighting css property names
 (setq x-mint-style-props
@@ -41,6 +74,7 @@
          (x-inline-marker-regexp "`")
          (x-style-prop-regexp (regexp-opt x-mint-style-props 'words)) )
 
+    ;; Set font-lock mode face for each category
     `((,x-operators-regexp . font-lock-variable-name-face)
       (,x-declarations-regexp . font-lock-constant-face)
       (,x-initializers-regexp . font-lock-type-face)
@@ -57,7 +91,7 @@
 
 ;; Reformat function
 (defun mint-format-file ()
-  "Formats current file using `mint format`"
+  "Formats current file using `mint format`."
 
   (let* ((file buffer-file-name)
          (error-file (make-temp-file "mint-format-errors-file"))
