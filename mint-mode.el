@@ -6,7 +6,7 @@
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 14 Nov 2018
-;; Keywords: javascript mocha jasmine
+;; Keywords: mint languages processes convenience tools files
 ;; Package-Requires: ((jsx-mode "0.1.10"))
 
 ;;; License:
