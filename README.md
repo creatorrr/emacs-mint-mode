@@ -23,6 +23,7 @@ Features
 --------
 
  - Syntax highlighting
+ - Basic keyword autocomplete (using company-mode)
  - Auto format on save using `mint format`
 
 Planned roadmap
@@ -32,8 +33,8 @@ __Help wanted with these!__
 
  - [x] Show formatting errors in buffer
  - [x] Highlight HTML tags and attributes
- - [o] Add to MELPA (Pending review)
- - [ ] Autocomplete support
+ - [x] Add to MELPA (Pending review)
+ - [x] Autocomplete support
  - [ ] Lint css values
  - [ ] Link identifiers to their location
  - [ ] Documentation search

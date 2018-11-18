@@ -2,7 +2,7 @@
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
 ;; Summary: Major mode for editing .mint files.
-;; Version: 0.4.3
+;; Version: 0.5.0
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 18 Nov 2018
@@ -82,6 +82,15 @@
 (defvar mint-style-colors (mint-get-tokens "./tokens/style/colors.txt"))
 (defvar mint-style-properties (mint-get-tokens "./tokens/style/properties.txt"))
 (defvar mint-style-units (mint-get-tokens "./tokens/style/units.txt"))
+
+;; All combined
+(defvar mint-all-style-tokens (append mint-style-units mint-style-properties mint-style-colors))
+(defvar mint-all-lang-tokens (append
+                              mint-lang-operators mint-lang-compound-types mint-lang-literal-types
+                              mint-lang-specifiers mint-lang-keywords mint-lang-initializers
+                              mint-lang-declarators mint-lang-blocks))
+
+(defvar mint-all-tokens (append mint-all-lang-tokens mint-all-style-tokens mint-html-tags))
 
 ;; Define regular expressions for syntax highlighting
 (setq mint-font-lock-keywords
@@ -191,6 +200,24 @@
 
       (,regex-inline-marker . font-lock-warning-face) )))
 
+;; Auto complete at point table
+(defun mint-keyword-completion-at-point ()
+  "Provide completion at point table to company-mode."
+
+  (interactive)
+  (let ((bounds (bounds-of-thing-at-point 'word)))
+
+    (when bounds
+      (list (car bounds)
+            (cdr bounds)
+
+            mint-all-tokens
+
+            :exclusive 'no
+            :company-docsig #'identity
+            :company-doc-buffer (lambda (cand)
+                                  (company-doc-buffer (format "'%s' is defined in mint-mode plugin" cand))) )) ))
+
 ;; Function for reformatting .mint source files
 (defun mint-format-file ()
   "Formats current file using `mint format`."
@@ -235,6 +262,9 @@
 ;;;###autoload
 (define-derived-mode mint-mode jsx-mode "mint mode"
   "Major mode for writing programs in mint lang."
+
+  ;; Register auto complete fn
+  (push 'mint-keyword-completion-at-point completion-at-point-functions)
 
   ;; hook for formatting on save
   (add-hook 'mint-mode-hook (lambda () (add-hook 'after-save-hook #'mint-format-file nil 'local)))
