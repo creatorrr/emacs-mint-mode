@@ -2,7 +2,7 @@
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
 ;; Summary: Major mode for editing .mint files.
-;; Version: 0.4.2
+;; Version: 0.4.3
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 18 Nov 2018
@@ -60,28 +60,28 @@
                                (not (string-empty-p str))) ))
 
     ;; Return list minus empty lines
-    (seq-filter 'string-not-empty-p trimmed-tokens) ))
+    (seq-filter string-not-empty-p trimmed-tokens) ))
 
 ;; For highlighting language tokens
 ;; Simple
-(defvar mint-lang-blocks (get-tokens "./tokens/lang/blocks.txt"))
-(defvar mint-lang-declarators (get-tokens "./tokens/lang/declarators.txt"))
-(defvar mint-lang-initializers (get-tokens "./tokens/lang/initializers.txt"))
-(defvar mint-lang-keywords (get-tokens "./tokens/lang/keywords.txt"))
-(defvar mint-lang-specifiers (get-tokens "./tokens/lang/specifiers.txt"))
-(defvar mint-lang-literal-types (get-tokens "./tokens/lang/literal-types.txt"))
+(defvar mint-lang-blocks (mint-get-tokens "./tokens/lang/blocks.txt"))
+(defvar mint-lang-declarators (mint-get-tokens "./tokens/lang/declarators.txt"))
+(defvar mint-lang-initializers (mint-get-tokens "./tokens/lang/initializers.txt"))
+(defvar mint-lang-keywords (mint-get-tokens "./tokens/lang/keywords.txt"))
+(defvar mint-lang-specifiers (mint-get-tokens "./tokens/lang/specifiers.txt"))
+(defvar mint-lang-literal-types (mint-get-tokens "./tokens/lang/literal-types.txt"))
 
 ;; Compound
-(defvar mint-lang-compound-types (get-tokens "./tokens/lang/compound-types.txt"))
-(defvar mint-lang-operators (get-tokens "./tokens/lang/operators.txt"))
+(defvar mint-lang-compound-types (mint-get-tokens "./tokens/lang/compound-types.txt"))
+(defvar mint-lang-operators (mint-get-tokens "./tokens/lang/operators.txt"))
 
 ;; For highlighting html tags
-(defvar mint-html-tags (get-tokens "./tokens/html/tags.txt"))
+(defvar mint-html-tags (mint-get-tokens "./tokens/html/tags.txt"))
 
 ;; For highlighting css tokens
-(defvar mint-style-colors (get-tokens "./tokens/style/colors.txt"))
-(defvar mint-style-properties (get-tokens "./tokens/style/properties.txt"))
-(defvar mint-style-units (get-tokens "./tokens/style/units.txt"))
+(defvar mint-style-colors (mint-get-tokens "./tokens/style/colors.txt"))
+(defvar mint-style-properties (mint-get-tokens "./tokens/style/properties.txt"))
+(defvar mint-style-units (mint-get-tokens "./tokens/style/units.txt"))
 
 ;; Define regular expressions for syntax highlighting
 (setq mint-font-lock-keywords
