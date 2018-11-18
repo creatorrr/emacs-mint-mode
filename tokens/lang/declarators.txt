@@ -1,0 +1,8 @@
+style
+enum
+component
+module
+record
+routes
+provider
+store

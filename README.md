@@ -15,7 +15,7 @@ Add the following to your `~/.emacs` config and restart your editor:
              :type git
              :host github
              :repo "creatorrr/emacs-mint-mode"
-             :files ("mint-mode.el"))
+             :files ("tokens" "mint-mode.el"))
   :mode ("\\.mint\\'" . mint-mode))
 ```
 
@@ -31,10 +31,10 @@ Planned roadmap
 __Help wanted with these!__
 
  - [x] Show formatting errors in buffer
- - [ ] Add to MELPA
+ - [x] Highlight HTML tags and attributes
+ - [o] Add to MELPA (Pending review)
  - [ ] Autocomplete support
  - [ ] Lint css values
- - [ ] Highlight HTML tags and attributes
  - [ ] Link identifiers to their location
  - [ ] Documentation search
  - [ ] Emacs shell commands for using the mint CLI
