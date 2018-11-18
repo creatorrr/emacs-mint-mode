@@ -1,5 +1,4 @@
-;;; mint-mode.el --- major mode for editing .mint files.
-;; -*- coding: utf-8; lexical-binding: t; -*-
+;;; mint-mode.el --- major mode for editing .mint files. -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
 ;; Version: 0.3.1
