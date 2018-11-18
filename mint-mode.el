@@ -1,7 +1,7 @@
 ;;; mint-mode.el --- major mode for editing .mint files. -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
-;; Version: 0.4.0
+;; Version: 0.4.1
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 18 Nov 2018
@@ -75,6 +75,9 @@
 (defvar lang-compound-types (get-tokens "./tokens/lang/compound-types.txt"))
 (defvar lang-operators (get-tokens "./tokens/lang/operators.txt"))
 
+;; For highlighting html tags
+(defvar html-tags (get-tokens "./tokens/html/tags.txt"))
+
 ;; For highlighting css tokens
 (defvar style-colors (get-tokens "./tokens/style/colors.txt"))
 (defvar style-properties (get-tokens "./tokens/style/properties.txt"))
@@ -94,14 +97,17 @@
          ;; For compound type constructors like `Maybe(Number)`
          (regex-compound-type-constructors
           (mapconcat (lambda (type)
-                       (concat (regexp-quote type) "[[:space:]]*("))
+                       (concat (regexp-quote type) "[[:space:]]*" "("))
+
                      lang-compound-types
                      "\\|") )
+
 
          ;; For compound type classes like `Maybe.just`
          (regex-compound-type-classes
           (mapconcat (lambda (type)
-                       (concat (regexp-quote type) "\\.*"))
+                       (concat (regexp-quote type) "\\."))
+
                      lang-compound-types
                      "\\|") )
 
@@ -109,7 +115,35 @@
          (regex-operators
           (mapconcat (lambda (type)
                        (concat "[[:space:]]+" (regexp-quote type) "[[:space:]]*"))
+
                      lang-operators
+                     "\\|") )
+
+         ;; For html tag-open (no style applied)
+         (regex-html-tag-open
+          (mapconcat (lambda (type)
+                       (concat "<" "[[:space:]]*" (regexp-quote type) "[[:space:]]*" ">"))
+                     html-tags
+                     "\\|") )
+
+         (regex-html-tag-open-with-attr
+          (mapconcat (lambda (type)
+                       (concat "<" "[[:space:]]*" (regexp-quote type) "[[:space:]]+" "[a-zA-Z\\-]+" "[[:space:]]*" "="))
+                     html-tags
+                     "\\|") )
+
+         ;; For html tag-open (style applied)
+         (regex-html-tag-open-with-style
+          (mapconcat (lambda (type)
+                       (concat "<" "[[:space:]]*" (regexp-quote type) "[[:space:]]*" "::"))
+                     html-tags
+                     "\\|") )
+
+         ;; For html tag-close
+         (regex-html-tag-close
+          (mapconcat (lambda (type)
+                       (concat "<" "/" "[[:space:]]*" (regexp-quote type) "[[:space:]]*" ">"))
+                     html-tags
                      "\\|") )
 
          ;; ;; For style colors
@@ -118,14 +152,16 @@
          ;; For style property names
          (regex-style-properties
           (mapconcat (lambda (type)
-                       (concat (regexp-quote type) "[[:space:]]*:"))
+                       (concat (regexp-quote type) "[[:space:]]*" ":"))
+
                      style-properties
                      "\\|") )
 
          ;; For style units
          (regex-style-units
           (mapconcat (lambda (type)
-                       (concat "[[:digit:]]+[[:space:]]*" (regexp-quote type)))
+                       (concat "[[:digit:]]+" "[[:space:]]*" (regexp-quote type)))
+
                      style-units
                      "\\|") )
 
@@ -143,6 +179,11 @@
       (,regex-compound-type-constructors . font-lock-type-face)
       (,regex-compound-type-classes . font-lock-string-face)
       (,regex-operators . font-lock-variable-name-face)
+
+      (,regex-html-tag-open . font-lock-variable-name-face)
+      (,regex-html-tag-open-with-attr . font-lock-variable-name-face)
+      (,regex-html-tag-open-with-style . font-lock-variable-name-face)
+      (,regex-html-tag-close . font-lock-variable-name-face)
 
       (,regex-style-colors . font-lock-constant-face)
       (,regex-style-properties . font-lock-variable-name-face)
