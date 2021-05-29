@@ -276,6 +276,7 @@
   ;; code for syntax highlighting
   (setq font-lock-defaults '((mint-font-lock-keywords))))
 
+(add-to-list 'auto-mode-alist '("\\.mint\\'" . mint-mode))
 
 ;; add the mode to the `features' list
 (provide 'mint-mode)
