@@ -19,6 +19,14 @@ Add the following to your `~/.emacs` config and restart your editor:
   :mode ("\\.mint\\'" . mint-mode))
 ```
 
+### Using [`leaf`](https://github.com/conao3/leaf.el)
+
+Add the following to your `~/.emacs` or `~/.emacs.d/init.el`:
+```elisp
+(leaf mint-mode
+  :mode ("\\.mint\\'" . mint-mode))
+```
+
 Features
 --------
 
