@@ -1,7 +1,7 @@
 emacs mint mode
 ===============
 
-Major mode for [mint lang](https://mint-lang.com).
+Major mode for [mint lang](https://www.mint-lang.com).
 
 Installing
 ----------
