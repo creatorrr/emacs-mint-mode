@@ -43,7 +43,7 @@ __Help wanted with these!__
  - [x] Highlight HTML tags and attributes
  - [x] Add to MELPA ([Pending review](https://github.com/melpa/melpa/pull/5816))
  - [x] Autocomplete support
- - [ ] Tag a release
+ - [x] Tag a release
  - [ ] Add to [Guix](https://guix.gnu.org/)  
  - [ ] Lint css values
  - [ ] Link identifiers to their location
