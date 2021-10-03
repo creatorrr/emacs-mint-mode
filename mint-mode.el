@@ -38,10 +38,9 @@
 ;; For more info on mint, visit: https://mint-lang.com
 
 ;;; Code:
-(eval-when-compile
-  (require 'js)
-  (require 'seq)
-  (require 'subr-x))
+(require 'js)
+(require 'seq)
+(require 'subr-x)
 
 ;; Utils
 (defun mint-get-tokens (filename)
