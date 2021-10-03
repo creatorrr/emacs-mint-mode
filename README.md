@@ -23,8 +23,7 @@ Add the following to your `~/.emacs` config and restart your editor:
 
 Add the following to your `~/.emacs` or `~/.emacs.d/init.el`:
 ```elisp
-(leaf mint-mode
-  :mode ("\\.mint\\'" . mint-mode))
+(leaf mint-mode)
 ```
 
 Features
