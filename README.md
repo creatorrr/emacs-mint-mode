@@ -43,7 +43,7 @@ __Help wanted with these!__
  - [x] Add to MELPA ([Pending review](https://github.com/melpa/melpa/pull/5816))
  - [x] Autocomplete support
  - [x] Tag a release
- - [ ] Add to [Guix](https://guix.gnu.org/)  
+ - [x] Add to Guix ([Merged](https://issues.guix.gnu.org/51045))
  - [ ] Lint css values
  - [ ] Link identifiers to their location
  - [ ] Documentation search
