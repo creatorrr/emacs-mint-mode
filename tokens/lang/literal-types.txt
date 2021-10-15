@@ -6,3 +6,4 @@ Time
 Html
 Void
 Never
+Tuple
