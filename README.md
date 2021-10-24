@@ -21,7 +21,7 @@ Add the following to your `~/.emacs` config and restart your editor:
 
 ### Using [`leaf.el`](https://github.com/conao3/leaf.el) and [`Guix`](https://guix.gnu.org)
 
-Install [leaf](https://github.com/conao3/leaf.el) and [emacs-mint-mode](https://github.com/creatorrr/emacs-mint-mode) to your default [profile](https://guix.gnu.org/cookbook/en/html_node/Guix-Profiles-in-Practice.html) with the following command:
+Install [leaf.el](https://github.com/conao3/leaf.el) and [emacs-mint-mode](https://github.com/creatorrr/emacs-mint-mode) to your default [profile](https://guix.gnu.org/cookbook/en/html_node/Guix-Profiles-in-Practice.html) with the following command:
 ```sh
 guix install emacs-leaf emacs-mint-mode
 ```
