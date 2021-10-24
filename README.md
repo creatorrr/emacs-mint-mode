@@ -19,7 +19,12 @@ Add the following to your `~/.emacs` config and restart your editor:
   :mode ("\\.mint\\'" . mint-mode))
 ```
 
-### Using [`leaf`](https://github.com/conao3/leaf.el)
+### Using [`leaf`](https://github.com/conao3/leaf.el) and [`guix`](https://guix.gnu.org)
+
+Install guix to your default [profile](https://guix.gnu.org/cookbook/en/html_node/Guix-Profiles-in-Practice.html) with the following command:
+```sh
+guix install emacs-leaf
+```
 
 Add the following to your `~/.emacs` or `~/.emacs.d/init.el`:
 ```elisp
