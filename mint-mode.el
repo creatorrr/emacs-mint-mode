@@ -217,6 +217,12 @@
             :company-doc-buffer (lambda (cand)
                                   (company-doc-buffer (format "'%s' is defined in mint-mode plugin" cand))) )) ))
 
+(defun format-all--locate-file (filename)
+  "Internal helper to locate dominating copy of FILENAME for current buffer."
+  (let* ((dir (and (buffer-file-name)
+                   (locate-dominating-file (buffer-file-name) filename))))
+    (when dir (expand-file-name (concat dir filename)))))
+
 ;; Function for reformatting .mint source files
 (defun mint-format-file ()
   "Formats current file using `mint format`."
@@ -224,6 +230,7 @@
   (let* ((file buffer-file-name)
          (error-file (make-temp-file "mint-format-errors-file"))
          (command (concat "mint format " file " > " error-file))
+         (default-directory (file-name-directory (format-all--locate-file "mint.json")))
 
          ;; Error container
          (error-buffer (get-buffer-create "*prettier errors*"))
@@ -237,7 +244,7 @@
          (result (call-process-shell-command command nil nil nil)) )
 
     ;; Check command result
-    (if (zerop result)
+    (if (or (zerop result) (eq 1 result))
 
       ;; Update formatted file and destroy error-buffer
       (progn
