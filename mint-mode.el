@@ -1,4 +1,4 @@
-;;; mint-mode.el --- major mode for editing .mint files. -*- coding: utf-8; lexical-binding: t; -*-
+;;; mint-mode.el --- Major mode for the Mint programming language -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
 ;; Summary: Major mode for editing .mint files.
@@ -281,7 +281,7 @@
 
 ;;;###autoload
 (define-derived-mode mint-mode js-jsx-mode "mint mode"
-  "Major mode for writing programs in mint lang."
+  "Major mode for writing programs in the Mint programming language."
 
   ;; Register auto complete fn
   (push 'mint-keyword-completion-at-point completion-at-point-functions)
