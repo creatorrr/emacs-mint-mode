@@ -219,7 +219,7 @@
 
 ;; Auto complete at point table
 (defun mint-keyword-completion-at-point ()
-  "Provide completion at point table to company-mode."
+  "Provide completion at point table to `company-mode'."
 
   (interactive)
   (let ((bounds (bounds-of-thing-at-point 'word)))
