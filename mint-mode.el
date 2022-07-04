@@ -117,79 +117,56 @@
 
          ;; For compound type constructors like `Maybe(Number)`
          (regex-compound-type-constructors
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat (regexp-quote type) "[[:space:]]*" "("))
-                   mint-lang-compound-types)))
+          (concat (regexp-opt mint-lang-compound-types)
+                  "[[:space:]]*" "("))
 
          ;; For compound type classes like `Maybe.just`
          (regex-compound-type-classes
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat (regexp-quote type) "\\."))
-                   mint-lang-compound-types)))
+          (concat (regexp-opt mint-lang-compound-types)
+                  "\\."))
 
          ;; For operators like `=>`
          (regex-operators
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat "[[:space:]]+" (regexp-quote type)
-                             "[[:space:]]*"))
-                   mint-lang-operators)))
+          (concat "[[:space:]]+"
+                  (regexp-opt mint-lang-operators)
+                  "[[:space:]]*"))
 
          ;; For html tag-open (no style applied)
          (regex-html-tag-open
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat "<" "[[:space:]]*"
-                             (regexp-quote type)
-                             "[[:space:]]*" ">"))
-                   mint-html-tags)))
+          (concat "<" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]*" ">"))
 
          (regex-html-tag-open-with-attr
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat "<" "[[:space:]]*"
-                             (regexp-quote type)
-                             "[[:space:]]+" "[a-zA-Z\\-]+"
-                             "[[:space:]]*" "="))
-                   mint-html-tags)))
+          (concat "<" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]+" "[a-zA-Z\\-]+"
+                  "[[:space:]]*" "="))
 
          ;; For html tag-open (style applied)
          (regex-html-tag-open-with-style
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat "<" "[[:space:]]*"
-                             (regexp-quote type)
-                             "[[:space:]]*" "::"))
-                   mint-html-tags)))
+          (concat "<" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]*" "::"))
 
          ;; For html tag-close
          (regex-html-tag-close
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat "<" "/" "[[:space:]]*"
-                             (regexp-quote type)
-                             "[[:space:]]*" ">"))
-                   mint-html-tags)))
+          (concat "<" "/" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]*" ">"))
 
          ;; ;; For style colors
          (regex-style-colors (regexp-opt mint-style-colors 'words))
 
          ;; For style property names
          (regex-style-properties
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat (regexp-quote type) "[[:space:]]*" ":"))
-                   mint-style-properties)))
+          (concat (regexp-opt mint-style-properties)
+                  "[[:space:]]*" ":"))
 
          ;; For style units
          (regex-style-units
-          (regexp-opt
-           (mapcar (lambda (type)
-                     (concat "[[:digit:]]+" "[[:space:]]*"
-                             (regexp-quote type)))
-                   mint-style-units)))
+          (concat "[[:digit:]]+" "[[:space:]]*"
+                  (regexp-opt mint-style-units)))
 
          ;; Other misc categories
          (regex-inline-marker "`"))
