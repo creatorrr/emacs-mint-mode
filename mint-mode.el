@@ -63,33 +63,47 @@
 
 ;; For highlighting language tokens
 ;; Simple
-(defvar mint-lang-blocks (mint-get-tokens "./tokens/lang/blocks.txt"))
-(defvar mint-lang-declarators (mint-get-tokens "./tokens/lang/declarators.txt"))
-(defvar mint-lang-initializers (mint-get-tokens "./tokens/lang/initializers.txt"))
-(defvar mint-lang-keywords (mint-get-tokens "./tokens/lang/keywords.txt"))
-(defvar mint-lang-specifiers (mint-get-tokens "./tokens/lang/specifiers.txt"))
-(defvar mint-lang-literal-types (mint-get-tokens "./tokens/lang/literal-types.txt"))
+(defvar mint-lang-blocks
+  (mint-get-tokens "./tokens/lang/blocks.txt"))
+(defvar mint-lang-declarators
+  (mint-get-tokens "./tokens/lang/declarators.txt"))
+(defvar mint-lang-initializers
+  (mint-get-tokens "./tokens/lang/initializers.txt"))
+(defvar mint-lang-keywords
+  (mint-get-tokens "./tokens/lang/keywords.txt"))
+(defvar mint-lang-specifiers
+  (mint-get-tokens "./tokens/lang/specifiers.txt"))
+(defvar mint-lang-literal-types
+  (mint-get-tokens "./tokens/lang/literal-types.txt"))
 
 ;; Compound
-(defvar mint-lang-compound-types (mint-get-tokens "./tokens/lang/compound-types.txt"))
-(defvar mint-lang-operators (mint-get-tokens "./tokens/lang/operators.txt"))
+(defvar mint-lang-compound-types
+  (mint-get-tokens "./tokens/lang/compound-types.txt"))
+(defvar mint-lang-operators
+  (mint-get-tokens "./tokens/lang/operators.txt"))
 
 ;; For highlighting html tags
-(defvar mint-html-tags (mint-get-tokens "./tokens/html/tags.txt"))
+(defvar mint-html-tags
+  (mint-get-tokens "./tokens/html/tags.txt"))
 
 ;; For highlighting css tokens
-(defvar mint-style-colors (mint-get-tokens "./tokens/style/colors.txt"))
-(defvar mint-style-properties (mint-get-tokens "./tokens/style/properties.txt"))
-(defvar mint-style-units (mint-get-tokens "./tokens/style/units.txt"))
+(defvar mint-style-colors
+  (mint-get-tokens "./tokens/style/colors.txt"))
+(defvar mint-style-properties
+  (mint-get-tokens "./tokens/style/properties.txt"))
+(defvar mint-style-units
+  (mint-get-tokens "./tokens/style/units.txt"))
 
 ;; All combined
-(defvar mint-all-style-tokens (append mint-style-units mint-style-properties mint-style-colors))
-(defvar mint-all-lang-tokens (append
-                              mint-lang-operators mint-lang-compound-types mint-lang-literal-types
-                              mint-lang-specifiers mint-lang-keywords mint-lang-initializers
-                              mint-lang-declarators mint-lang-blocks))
+(defvar mint-all-style-tokens
+  (append mint-style-units mint-style-properties mint-style-colors))
+(defvar mint-all-lang-tokens
+  (append mint-lang-operators mint-lang-compound-types mint-lang-literal-types
+          mint-lang-specifiers mint-lang-keywords mint-lang-initializers
+          mint-lang-declarators mint-lang-blocks))
 
-(defvar mint-all-tokens (append mint-all-lang-tokens mint-all-style-tokens mint-html-tags))
+(defvar mint-all-tokens
+  (append mint-all-lang-tokens mint-all-style-tokens mint-html-tags))
 
 ;; Define regular expressions for syntax highlighting
 (defvar mint-font-lock-keywords
@@ -219,8 +233,10 @@
 
             :exclusive 'no
             :company-docsig #'identity
-            :company-doc-buffer (lambda (cand)
-                                  (company-doc-buffer (format "'%s' is defined in mint-mode plugin" cand))) )) ))
+            :company-doc-buffer
+            (lambda (cand)
+              (company-doc-buffer
+               (format "'%s' is defined in mint-mode plugin" cand)))))))
 
 ;; Function for reformatting .mint source files
 (defun mint-format-file ()
