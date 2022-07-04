@@ -108,91 +108,91 @@
 (defvar mint-font-lock-keywords
 
          ;; For simple keywords like `do`, `fun` etc.
-  (let* ((regex-blocks (regexp-opt mint-lang-blocks 'words))
-         (regex-declarators (regexp-opt mint-lang-declarators 'words))
-         (regex-initializers (regexp-opt mint-lang-initializers 'words))
-         (regex-keywords (regexp-opt mint-lang-keywords 'words))
-         (regex-specifiers (regexp-opt mint-lang-specifiers 'words))
-         (regex-literal-types (regexp-opt mint-lang-literal-types 'words))
+  (let* ((regexp-blocks (regexp-opt mint-lang-blocks 'words))
+         (regexp-declarators (regexp-opt mint-lang-declarators 'words))
+         (regexp-initializers (regexp-opt mint-lang-initializers 'words))
+         (regexp-keywords (regexp-opt mint-lang-keywords 'words))
+         (regexp-specifiers (regexp-opt mint-lang-specifiers 'words))
+         (regexp-literal-types (regexp-opt mint-lang-literal-types 'words))
 
          ;; For compound type constructors like `Maybe(Number)`
-         (regex-compound-type-constructors
+         (regexp-compound-type-constructors
           (concat (regexp-opt mint-lang-compound-types)
                   "[[:space:]]*" "("))
 
          ;; For compound type classes like `Maybe.just`
-         (regex-compound-type-classes
+         (regexp-compound-type-classes
           (concat (regexp-opt mint-lang-compound-types)
                   "\\."))
 
          ;; For operators like `=>`
-         (regex-operators
+         (regexp-operators
           (concat "[[:space:]]+"
                   (regexp-opt mint-lang-operators)
                   "[[:space:]]*"))
 
          ;; For html tag-open (no style applied)
-         (regex-html-tag-open
+         (regexp-html-tag-open
           (concat "<" "[[:space:]]*"
                   (regexp-opt mint-html-tags)
                   "[[:space:]]*" ">"))
 
-         (regex-html-tag-open-with-attr
+         (regexp-html-tag-open-with-attr
           (concat "<" "[[:space:]]*"
                   (regexp-opt mint-html-tags)
                   "[[:space:]]+" "[a-zA-Z\\-]+"
                   "[[:space:]]*" "="))
 
          ;; For html tag-open (style applied)
-         (regex-html-tag-open-with-style
+         (regexp-html-tag-open-with-style
           (concat "<" "[[:space:]]*"
                   (regexp-opt mint-html-tags)
                   "[[:space:]]*" "::"))
 
          ;; For html tag-close
-         (regex-html-tag-close
+         (regexp-html-tag-close
           (concat "<" "/" "[[:space:]]*"
                   (regexp-opt mint-html-tags)
                   "[[:space:]]*" ">"))
 
          ;; ;; For style colors
-         (regex-style-colors (regexp-opt mint-style-colors 'words))
+         (regexp-style-colors (regexp-opt mint-style-colors 'words))
 
          ;; For style property names
-         (regex-style-properties
+         (regexp-style-properties
           (concat (regexp-opt mint-style-properties)
                   "[[:space:]]*" ":"))
 
          ;; For style units
-         (regex-style-units
+         (regexp-style-units
           (concat "[[:digit:]]+" "[[:space:]]*"
                   (regexp-opt mint-style-units)))
 
          ;; Other misc categories
-         (regex-inline-marker "`"))
+         (regexp-inline-marker "`"))
 
     ;; Set font-lock mode face for each category
-    `((,regex-blocks . font-lock-constant-face)
-      (,regex-declarators . font-lock-constant-face)
-      (,regex-initializers . font-lock-type-face)
-      (,regex-keywords . font-lock-warning-face)
-      (,regex-specifiers . font-lock-builtin-face)
-      (,regex-literal-types . font-lock-variable-name-face)
+    `((,regexp-blocks . font-lock-constant-face)
+      (,regexp-declarators . font-lock-constant-face)
+      (,regexp-initializers . font-lock-type-face)
+      (,regexp-keywords . font-lock-warning-face)
+      (,regexp-specifiers . font-lock-builtin-face)
+      (,regexp-literal-types . font-lock-variable-name-face)
 
-      (,regex-compound-type-constructors . font-lock-type-face)
-      (,regex-compound-type-classes . font-lock-string-face)
-      (,regex-operators . font-lock-variable-name-face)
+      (,regexp-compound-type-constructors . font-lock-type-face)
+      (,regexp-compound-type-classes . font-lock-string-face)
+      (,regexp-operators . font-lock-variable-name-face)
 
-      (,regex-html-tag-open . font-lock-variable-name-face)
-      (,regex-html-tag-open-with-attr . font-lock-variable-name-face)
-      (,regex-html-tag-open-with-style . font-lock-variable-name-face)
-      (,regex-html-tag-close . font-lock-variable-name-face)
+      (,regexp-html-tag-open . font-lock-variable-name-face)
+      (,regexp-html-tag-open-with-attr . font-lock-variable-name-face)
+      (,regexp-html-tag-open-with-style . font-lock-variable-name-face)
+      (,regexp-html-tag-close . font-lock-variable-name-face)
 
-      (,regex-style-colors . font-lock-constant-face)
-      (,regex-style-properties . font-lock-variable-name-face)
-      (,regex-style-units . font-lock-builtin-face)
+      (,regexp-style-colors . font-lock-constant-face)
+      (,regexp-style-properties . font-lock-variable-name-face)
+      (,regexp-style-units . font-lock-builtin-face)
 
-      (,regex-inline-marker . font-lock-warning-face) )))
+      (,regexp-inline-marker . font-lock-warning-face) )))
 
 ;; Auto complete at point table
 (defun mint-keyword-completion-at-point ()
