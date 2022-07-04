@@ -92,7 +92,7 @@
 (defvar mint-all-tokens (append mint-all-lang-tokens mint-all-style-tokens mint-html-tags))
 
 ;; Define regular expressions for syntax highlighting
-(setq mint-font-lock-keywords
+(defvar mint-font-lock-keywords
 
          ;; For simple keywords like `do`, `fun` etc.
   (let* ((regex-blocks (regexp-opt mint-lang-blocks 'words))
