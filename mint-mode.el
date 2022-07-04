@@ -7,7 +7,7 @@
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 18 Nov 2018
 ;; Keywords: mint languages processes convenience tools files
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "25.1"))
 
 ;;; License:
 
@@ -39,7 +39,6 @@
 
 ;;; Code:
 (require 'js)
-(require 'seq)
 (require 'subr-x)
 
 ;; Utils
