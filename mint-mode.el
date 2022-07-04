@@ -271,7 +271,10 @@
   (push 'mint-keyword-completion-at-point completion-at-point-functions)
 
   ;; hook for formatting on save
-  (add-hook 'mint-mode-hook (lambda () (add-hook 'after-save-hook #'mint-format-file nil 'local)))
+
+  ;; (add-hook 'mint-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'after-save-hook #'mint-format-file nil 'local)))
 
   ;; For correctly formatting ansi terminal color codes
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
