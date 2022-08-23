@@ -105,7 +105,7 @@
          ;; For compound type constructors like `Maybe(Number)`
          (regex-compound-type-constructors
           (mapconcat (lambda (type)
-                       (concat (regexp-quote type) "[[:space:]]*" "("))
+                       (concat "\\b" (regexp-quote type) "[[:space:]]*" "("))
 
                      mint-lang-compound-types
                      "\\|") )
