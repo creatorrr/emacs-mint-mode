@@ -53,7 +53,7 @@ __Help wanted with these!__
  - [ ] Link identifiers to their location
  - [ ] Documentation search
  - [ ] Emacs shell commands for using the mint CLI
- - [ ] Language Server Protocol Integration and Testing ([In progress](https://github.com/joaotavora/eglot/pull/750))
+ - [x] Language Server Protocol Integration and Testing ([Merged](https://github.com/joaotavora/eglot/pull/750))
 
 Screenshots
 -----------
