@@ -1,4 +1,4 @@
-;;; mint-mode.el --- major mode for editing .mint files. -*- coding: utf-8; lexical-binding: t; -*-
+;;; mint-mode.el --- Major mode for the Mint programming language -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer ( singh@diwank.name )
 ;; Summary: Major mode for editing .mint files.
@@ -7,7 +7,7 @@
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 18 Nov 2018
 ;; Keywords: mint languages processes convenience tools files
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "25.1"))
 
 ;;; License:
 
@@ -39,7 +39,6 @@
 
 ;;; Code:
 (require 'js)
-(require 'seq)
 (require 'subr-x)
 
 ;; Utils
@@ -56,152 +55,148 @@
          (trimmed-tokens (mapcar 'string-trim raw-tokens))
 
          (string-not-empty-p (lambda (str)
-                               (not (string-empty-p str))) ))
+                               (not (string-empty-p str)))))
 
     ;; Return list minus empty lines
-    (seq-filter string-not-empty-p trimmed-tokens) ))
+    (seq-filter string-not-empty-p trimmed-tokens)))
 
 ;; For highlighting language tokens
 ;; Simple
-(defvar mint-lang-blocks (mint-get-tokens "./tokens/lang/blocks.txt"))
-(defvar mint-lang-declarators (mint-get-tokens "./tokens/lang/declarators.txt"))
-(defvar mint-lang-initializers (mint-get-tokens "./tokens/lang/initializers.txt"))
-(defvar mint-lang-keywords (mint-get-tokens "./tokens/lang/keywords.txt"))
-(defvar mint-lang-specifiers (mint-get-tokens "./tokens/lang/specifiers.txt"))
-(defvar mint-lang-literal-types (mint-get-tokens "./tokens/lang/literal-types.txt"))
+(defvar mint-lang-blocks
+  (mint-get-tokens "./tokens/lang/blocks.txt"))
+(defvar mint-lang-declarators
+  (mint-get-tokens "./tokens/lang/declarators.txt"))
+(defvar mint-lang-initializers
+  (mint-get-tokens "./tokens/lang/initializers.txt"))
+(defvar mint-lang-keywords
+  (mint-get-tokens "./tokens/lang/keywords.txt"))
+(defvar mint-lang-specifiers
+  (mint-get-tokens "./tokens/lang/specifiers.txt"))
+(defvar mint-lang-literal-types
+  (mint-get-tokens "./tokens/lang/literal-types.txt"))
 
 ;; Compound
-(defvar mint-lang-compound-types (mint-get-tokens "./tokens/lang/compound-types.txt"))
-(defvar mint-lang-operators (mint-get-tokens "./tokens/lang/operators.txt"))
+(defvar mint-lang-compound-types
+  (mint-get-tokens "./tokens/lang/compound-types.txt"))
+(defvar mint-lang-operators
+  (mint-get-tokens "./tokens/lang/operators.txt"))
 
 ;; For highlighting html tags
-(defvar mint-html-tags (mint-get-tokens "./tokens/html/tags.txt"))
+(defvar mint-html-tags
+  (mint-get-tokens "./tokens/html/tags.txt"))
 
 ;; For highlighting css tokens
-(defvar mint-style-colors (mint-get-tokens "./tokens/style/colors.txt"))
-(defvar mint-style-properties (mint-get-tokens "./tokens/style/properties.txt"))
-(defvar mint-style-units (mint-get-tokens "./tokens/style/units.txt"))
+(defvar mint-style-colors
+  (mint-get-tokens "./tokens/style/colors.txt"))
+(defvar mint-style-properties
+  (mint-get-tokens "./tokens/style/properties.txt"))
+(defvar mint-style-units
+  (mint-get-tokens "./tokens/style/units.txt"))
 
 ;; All combined
-(defvar mint-all-style-tokens (append mint-style-units mint-style-properties mint-style-colors))
-(defvar mint-all-lang-tokens (append
-                              mint-lang-operators mint-lang-compound-types mint-lang-literal-types
-                              mint-lang-specifiers mint-lang-keywords mint-lang-initializers
-                              mint-lang-declarators mint-lang-blocks))
+(defvar mint-all-style-tokens
+  (append mint-style-units mint-style-properties mint-style-colors))
+(defvar mint-all-lang-tokens
+  (append mint-lang-operators mint-lang-compound-types mint-lang-literal-types
+          mint-lang-specifiers mint-lang-keywords mint-lang-initializers
+          mint-lang-declarators mint-lang-blocks))
 
-(defvar mint-all-tokens (append mint-all-lang-tokens mint-all-style-tokens mint-html-tags))
+(defvar mint-all-tokens
+  (append mint-all-lang-tokens mint-all-style-tokens mint-html-tags))
 
 ;; Define regular expressions for syntax highlighting
-(setq mint-font-lock-keywords
+(defvar mint-font-lock-keywords
 
          ;; For simple keywords like `do`, `fun` etc.
-  (let* ((regex-blocks (regexp-opt mint-lang-blocks 'words))
-         (regex-declarators (regexp-opt mint-lang-declarators 'words))
-         (regex-initializers (regexp-opt mint-lang-initializers 'words))
-         (regex-keywords (regexp-opt mint-lang-keywords 'words))
-         (regex-specifiers (regexp-opt mint-lang-specifiers 'words))
-         (regex-literal-types (regexp-opt mint-lang-literal-types 'words))
+  (let* ((regexp-blocks (regexp-opt mint-lang-blocks 'words))
+         (regexp-declarators (regexp-opt mint-lang-declarators 'words))
+         (regexp-initializers (regexp-opt mint-lang-initializers 'words))
+         (regexp-keywords (regexp-opt mint-lang-keywords 'words))
+         (regexp-specifiers (regexp-opt mint-lang-specifiers 'words))
+         (regexp-literal-types (regexp-opt mint-lang-literal-types 'words))
 
          ;; For compound type constructors like `Maybe(Number)`
-         (regex-compound-type-constructors
-          (mapconcat (lambda (type)
-                       (concat "\\b" (regexp-quote type) "[[:space:]]*" "("))
-
-                     mint-lang-compound-types
-                     "\\|") )
-
+         (regexp-compound-type-constructors
+          (concat (regexp-opt mint-lang-compound-types)
+                  "[[:space:]]*" "("))
 
          ;; For compound type classes like `Maybe.just`
-         (regex-compound-type-classes
-          (mapconcat (lambda (type)
-                       (concat (regexp-quote type) "\\."))
-
-                     mint-lang-compound-types
-                     "\\|") )
+         (regexp-compound-type-classes
+          (concat (regexp-opt mint-lang-compound-types)
+                  "\\."))
 
          ;; For operators like `=>`
-         (regex-operators
-          (mapconcat (lambda (type)
-                       (concat "[[:space:]]+" (regexp-quote type) "[[:space:]]*"))
-
-                     mint-lang-operators
-                     "\\|") )
+         (regexp-operators
+          (concat "[[:space:]]+"
+                  (regexp-opt mint-lang-operators)
+                  "[[:space:]]*"))
 
          ;; For html tag-open (no style applied)
-         (regex-html-tag-open
-          (mapconcat (lambda (type)
-                       (concat "<" "[[:space:]]*" (regexp-quote type) "[[:space:]]*" ">"))
-                     mint-html-tags
-                     "\\|") )
+         (regexp-html-tag-open
+          (concat "<" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]*" ">"))
 
-         (regex-html-tag-open-with-attr
-          (mapconcat (lambda (type)
-                       (concat "<" "[[:space:]]*" (regexp-quote type) "[[:space:]]+" "[a-zA-Z\\-]+" "[[:space:]]*" "="))
-                     mint-html-tags
-                     "\\|") )
+         (regexp-html-tag-open-with-attr
+          (concat "<" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]+" "[a-zA-Z\\-]+"
+                  "[[:space:]]*" "="))
 
          ;; For html tag-open (style applied)
-         (regex-html-tag-open-with-style
-          (mapconcat (lambda (type)
-                       (concat "<" "[[:space:]]*" (regexp-quote type) "[[:space:]]*" "::"))
-                     mint-html-tags
-                     "\\|") )
+         (regexp-html-tag-open-with-style
+          (concat "<" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]*" "::"))
 
          ;; For html tag-close
-         (regex-html-tag-close
-          (mapconcat (lambda (type)
-                       (concat "<" "/" "[[:space:]]*" (regexp-quote type) "[[:space:]]*" ">"))
-                     mint-html-tags
-                     "\\|") )
+         (regexp-html-tag-close
+          (concat "<" "/" "[[:space:]]*"
+                  (regexp-opt mint-html-tags)
+                  "[[:space:]]*" ">"))
 
          ;; ;; For style colors
-         (regex-style-colors (regexp-opt mint-style-colors 'words))
+         (regexp-style-colors (regexp-opt mint-style-colors 'words))
 
          ;; For style property names
-         (regex-style-properties
-          (mapconcat (lambda (type)
-                       (concat (regexp-quote type) "[[:space:]]*" ":"))
-
-                     mint-style-properties
-                     "\\|") )
+         (regexp-style-properties
+          (concat (regexp-opt mint-style-properties)
+                  "[[:space:]]*" ":"))
 
          ;; For style units
-         (regex-style-units
-          (mapconcat (lambda (type)
-                       (concat "[[:digit:]]+" "[[:space:]]*" (regexp-quote type)))
-
-                     mint-style-units
-                     "\\|") )
+         (regexp-style-units
+          (concat "[[:digit:]]+" "[[:space:]]*"
+                  (regexp-opt mint-style-units)))
 
          ;; Other misc categories
-         (regex-inline-marker "`"))
+         (regexp-inline-marker "`"))
 
     ;; Set font-lock mode face for each category
-    `((,regex-blocks . font-lock-constant-face)
-      (,regex-declarators . font-lock-constant-face)
-      (,regex-initializers . font-lock-type-face)
-      (,regex-keywords . font-lock-warning-face)
-      (,regex-specifiers . font-lock-builtin-face)
-      (,regex-literal-types . font-lock-variable-name-face)
+    `((,regexp-blocks . font-lock-constant-face)
+      (,regexp-declarators . font-lock-constant-face)
+      (,regexp-initializers . font-lock-type-face)
+      (,regexp-keywords . font-lock-warning-face)
+      (,regexp-specifiers . font-lock-builtin-face)
+      (,regexp-literal-types . font-lock-variable-name-face)
 
-      (,regex-compound-type-constructors . font-lock-type-face)
-      (,regex-compound-type-classes . font-lock-string-face)
-      (,regex-operators . font-lock-variable-name-face)
+      (,regexp-compound-type-constructors . font-lock-type-face)
+      (,regexp-compound-type-classes . font-lock-string-face)
+      (,regexp-operators . font-lock-variable-name-face)
 
-      (,regex-html-tag-open . font-lock-variable-name-face)
-      (,regex-html-tag-open-with-attr . font-lock-variable-name-face)
-      (,regex-html-tag-open-with-style . font-lock-variable-name-face)
-      (,regex-html-tag-close . font-lock-variable-name-face)
+      (,regexp-html-tag-open . font-lock-variable-name-face)
+      (,regexp-html-tag-open-with-attr . font-lock-variable-name-face)
+      (,regexp-html-tag-open-with-style . font-lock-variable-name-face)
+      (,regexp-html-tag-close . font-lock-variable-name-face)
 
-      (,regex-style-colors . font-lock-constant-face)
-      (,regex-style-properties . font-lock-variable-name-face)
-      (,regex-style-units . font-lock-builtin-face)
+      (,regexp-style-colors . font-lock-constant-face)
+      (,regexp-style-properties . font-lock-variable-name-face)
+      (,regexp-style-units . font-lock-builtin-face)
 
-      (,regex-inline-marker . font-lock-warning-face) )))
+      (,regexp-inline-marker . font-lock-warning-face))))
 
 ;; Auto complete at point table
 (defun mint-keyword-completion-at-point ()
-  "Provide completion at point table to company-mode."
+  "Provide completion at point table to `company-mode'."
 
   (interactive)
   (let ((bounds (bounds-of-thing-at-point 'word)))
@@ -214,8 +209,10 @@
 
             :exclusive 'no
             :company-docsig #'identity
-            :company-doc-buffer (lambda (cand)
-                                  (company-doc-buffer (format "'%s' is defined in mint-mode plugin" cand))) )) ))
+            :company-doc-buffer
+            (lambda (cand)
+              (company-doc-buffer
+               (format "'%s' is defined in mint-mode plugin" cand)))))))
 
 (defun format-all--locate-file (filename)
   "Internal helper to locate dominating copy of FILENAME for current buffer."
@@ -241,7 +238,7 @@
          (preserve-modes t)
 
          ;; Run command in process
-         (result (call-process-shell-command command nil nil nil)) )
+         (result (call-process-shell-command command nil nil nil)))
 
     ;; Check command result
     (if (or (zerop result) (eq 1 result))
@@ -260,17 +257,23 @@
           (ansi-color-apply-on-region (point-min) (point-max))
           (compilation-mode))
 
-        (display-buffer error-buffer)) )
+        (display-buffer error-buffer)))
 
     ;; Remove temporary error file
-    (delete-file error-file) ))
+    (delete-file error-file)))
 
 ;;;###autoload
 (define-derived-mode mint-mode js-jsx-mode "mint mode"
-  "Major mode for writing programs in mint lang."
+  "Major mode for writing programs in the Mint programming language."
 
   ;; Register auto complete fn
   (push 'mint-keyword-completion-at-point completion-at-point-functions)
+
+  ;; hook for formatting on save
+
+  ;; (add-hook 'mint-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'after-save-hook #'mint-format-file nil 'local)))
 
   ;; For correctly formatting ansi terminal color codes
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
