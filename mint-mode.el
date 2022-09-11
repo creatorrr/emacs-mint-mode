@@ -55,10 +55,10 @@
          (trimmed-tokens (mapcar 'string-trim raw-tokens))
 
          (string-not-empty-p (lambda (str)
-                               (not (string-empty-p str))) ))
+                               (not (string-empty-p str)))))
 
     ;; Return list minus empty lines
-    (seq-filter string-not-empty-p trimmed-tokens) ))
+    (seq-filter string-not-empty-p trimmed-tokens)))
 
 ;; For highlighting language tokens
 ;; Simple
@@ -192,7 +192,7 @@
       (,regexp-style-properties . font-lock-variable-name-face)
       (,regexp-style-units . font-lock-builtin-face)
 
-      (,regexp-inline-marker . font-lock-warning-face) )))
+      (,regexp-inline-marker . font-lock-warning-face))))
 
 ;; Auto complete at point table
 (defun mint-keyword-completion-at-point ()
@@ -214,6 +214,12 @@
               (company-doc-buffer
                (format "'%s' is defined in mint-mode plugin" cand)))))))
 
+(defun format-all--locate-file (filename)
+  "Internal helper to locate dominating copy of FILENAME for current buffer."
+  (let* ((dir (and (buffer-file-name)
+                   (locate-dominating-file (buffer-file-name) filename))))
+    (when dir (expand-file-name (concat dir filename)))))
+
 ;; Function for reformatting .mint source files
 (defun mint-format-file ()
   "Formats current file using `mint format`."
@@ -221,6 +227,7 @@
   (let* ((file buffer-file-name)
          (error-file (make-temp-file "mint-format-errors-file"))
          (command (concat "mint format " file " > " error-file))
+         (default-directory (file-name-directory (format-all--locate-file "mint.json")))
 
          ;; Error container
          (error-buffer (get-buffer-create "*prettier errors*"))
@@ -231,10 +238,10 @@
          (preserve-modes t)
 
          ;; Run command in process
-         (result (call-process-shell-command command nil nil nil)) )
+         (result (call-process-shell-command command nil nil nil)))
 
     ;; Check command result
-    (if (zerop result)
+    (if (or (zerop result) (eq 1 result))
 
       ;; Update formatted file and destroy error-buffer
       (progn
@@ -250,10 +257,10 @@
           (ansi-color-apply-on-region (point-min) (point-max))
           (compilation-mode))
 
-        (display-buffer error-buffer)) )
+        (display-buffer error-buffer)))
 
     ;; Remove temporary error file
-    (delete-file error-file) ))
+    (delete-file error-file)))
 
 ;;;###autoload
 (define-derived-mode mint-mode js-jsx-mode "mint mode"
