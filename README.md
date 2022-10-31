@@ -35,8 +35,6 @@ Features
 --------
 
  - Syntax highlighting
- - Basic keyword autocomplete (using company-mode)
- - Auto format on save using `mint format`
 
 Planned roadmap
 ---------------
@@ -49,10 +47,6 @@ __Help wanted with these!__
  - [x] Autocomplete support
  - [x] Tag a release
  - [x] Package for Guix ([Done](https://issues.guix.gnu.org/51045))
- - [ ] Lint css values
- - [ ] Link identifiers to their location
- - [ ] Documentation search
- - [ ] Emacs shell commands for using the mint CLI
  - [x] Language Server Protocol Integration and Testing ([eglot](https://github.com/joaotavora/eglot/pull/750), [lsp-mode](https://github.com/emacs-lsp/lsp-mode/pull/3679))
 
 Screenshots
