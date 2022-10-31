@@ -194,32 +194,9 @@
 
       (,regexp-inline-marker . font-lock-warning-face))))
 
-;; Auto complete at point table
-(defun mint-keyword-completion-at-point ()
-  "Provide completion at point table to `company-mode'."
-
-  (interactive)
-  (let ((bounds (bounds-of-thing-at-point 'word)))
-
-    (when bounds
-      (list (car bounds)
-            (cdr bounds)
-
-            mint-all-tokens
-
-            :exclusive 'no
-            :company-docsig #'identity
-            :company-doc-buffer
-            (lambda (cand)
-              (company-doc-buffer
-               (format "'%s' is defined in mint-mode plugin" cand)))))))
-
 ;;;###autoload
 (define-derived-mode mint-mode js-jsx-mode "mint mode"
   "Major mode for writing programs in the Mint programming language."
-
-  ;; Register auto complete fn
-  (push 'mint-keyword-completion-at-point completion-at-point-functions)
 
   ;; For correctly formatting ansi terminal color codes
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
