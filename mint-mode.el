@@ -34,7 +34,6 @@
 
 ;; Major mode for writing programs in mint lang. Provides:
 ;; - Syntax highlighting
-;; - Auto format on save using `mint format`
 ;;
 ;; For more info on mint, visit: https://mint-lang.com
 
@@ -215,66 +214,12 @@
               (company-doc-buffer
                (format "'%s' is defined in mint-mode plugin" cand)))))))
 
-(defun format-all--locate-file (filename)
-  "Internal helper to locate dominating copy of FILENAME for current buffer."
-  (let* ((dir (and (buffer-file-name)
-                   (locate-dominating-file (buffer-file-name) filename))))
-    (when dir (expand-file-name (concat dir filename)))))
-
-;; Function for reformatting .mint source files
-(defun mint-format-file ()
-  "Formats current file using `mint format`."
-
-  (let* ((file buffer-file-name)
-         (error-file (make-temp-file "mint-format-errors-file"))
-         (command (concat "mint format " file " > " error-file))
-         (default-directory (file-name-directory (format-all--locate-file "mint.json")))
-
-         ;; Error container
-         (error-buffer (get-buffer-create "*prettier errors*"))
-
-         ;; Revert options
-         (ignore-auto t)
-         (noconfirm t)
-         (preserve-modes t)
-
-         ;; Run command in process
-         (result (call-process-shell-command command nil nil nil)))
-
-    ;; Check command result
-    (if (or (zerop result) (eq 1 result))
-
-      ;; Update formatted file and destroy error-buffer
-      (progn
-        (kill-buffer error-buffer)
-        (revert-buffer ignore-auto noconfirm preserve-modes))
-
-      ;; Show errors
-      (progn
-        (with-current-buffer error-buffer
-          (setq buffer-read-only nil)
-          (erase-buffer)
-          (insert-file-contents error-file t nil nil)
-          (ansi-color-apply-on-region (point-min) (point-max))
-          (compilation-mode))
-
-        (display-buffer error-buffer)))
-
-    ;; Remove temporary error file
-    (delete-file error-file)))
-
 ;;;###autoload
 (define-derived-mode mint-mode js-jsx-mode "mint mode"
   "Major mode for writing programs in the Mint programming language."
 
   ;; Register auto complete fn
   (push 'mint-keyword-completion-at-point completion-at-point-functions)
-
-  ;; hook for formatting on save
-
-  ;; (add-hook 'mint-mode-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'after-save-hook #'mint-format-file nil 'local)))
 
   ;; For correctly formatting ansi terminal color codes
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
