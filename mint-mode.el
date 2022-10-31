@@ -3,7 +3,7 @@
 ;; Author: Diwank Tomer <singh@diwank.name>
 ;; Maintainer: jgart <jgart@dismail.de>
 ;; Summary: Major mode for editing .mint files.
-;; Version: 0.5.0
+;; Version: 2.0.0
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
 ;; URL: https://github.com/creatorrr/emacs-mint-mode
 ;; Created: 18 Nov 2018
