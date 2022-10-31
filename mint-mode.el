@@ -1,6 +1,7 @@
 ;;; mint-mode.el --- Major mode for the Mint programming language -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Author: Diwank Tomer <singh@diwank.name>
+;; Maintainer: jgart <jgart@dismail.de>
 ;; Summary: Major mode for editing .mint files.
 ;; Version: 0.5.0
 ;; Homepage: https://github.com/creatorrr/emacs-mint-mode
