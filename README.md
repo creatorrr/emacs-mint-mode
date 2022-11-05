@@ -43,7 +43,7 @@ __Help wanted with these!__
 
  - [x] Show formatting errors in buffer
  - [x] Highlight HTML tags and attributes
- - [x] Add to MELPA ([Pending review](https://github.com/melpa/melpa/pull/5816))
+ - [x] Add to MELPA ([DONE](https://github.com/melpa/melpa/pull/8257))
  - [x] Autocomplete support
  - [x] Tag a release
  - [x] Package for Guix ([Done](https://issues.guix.gnu.org/51045))
